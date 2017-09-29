@@ -14,7 +14,7 @@ RSpec.describe Main do
     end
 
     context 'when I pass a library songs' do
-      let(:library) { ['Klucks','Focks','Suck'] }
+      let(:library) { ['z','Klucks','Focks','Suck'] }
 
       it 'contains the songs of that library' do
         expect(subject.playlist).to include('Klucks')
