@@ -92,6 +92,12 @@ RSpec.describe Main do
       it 'I get songs from the xml file' do
         expect(subject.playlist.first.name).to eq('Caught Up In You')
       end
+
+      it 'returns the same playlist even if called twice' do
+        playlist_1 = subject.playlist.map(&:name)
+        playlist_2 = subject.playlist.map(&:name)
+        expect(playlist_1).to eq(playlist_2)
+      end
     end
 
     context 'when the first song does not relate no any other song' do

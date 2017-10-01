@@ -1,3 +1,5 @@
+require 'bigdecimal'
+
 class Playlist
   include Enumerable
 
