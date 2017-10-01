@@ -54,6 +54,6 @@ class Main
   end
 
   def next_song
-    @memory.detect{ |s| s.name[0] == @playlist.last.name[-1] }
+    @memory.detect{ |s| s.name[0].downcase == @playlist.last.name[-1].downcase }
   end
 end
