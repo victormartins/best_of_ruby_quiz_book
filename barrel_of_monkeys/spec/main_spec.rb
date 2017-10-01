@@ -4,7 +4,7 @@ require_relative './../song'
 RSpec.describe Main do
   describe '#playlist' do
     it 'returns an Array' do
-      expect(subject.playlist).to be_kind_of(Array)
+      expect(subject.playlist).to be_kind_of(Playlist)
     end
 
     context 'when I pass a library of songs' do
@@ -83,7 +83,7 @@ RSpec.describe Main do
         end
 
         it 'returns only two songs' do
-          expect(subject.playlist(first_song_name: 'za')).to eq(['za', 'az'])
+          expect(subject.playlist(first_song_name: 'za').map(&:name)).to eq(['za', 'az'])
         end
       end
     end

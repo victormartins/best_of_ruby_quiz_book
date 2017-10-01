@@ -1,4 +1,5 @@
 require_relative 'library_loader'
+require_relative 'playlist'
 
 class Main
   def initialize(library: LibraryLoader.new.call)
@@ -6,7 +7,7 @@ class Main
   end
 
   def playlist(first_song_name: nil, last_song_name: nil)
-    @playlist = []
+    @playlist = Playlist.new
     return @playlist if @memory.empty?
 
     insert_first_song(first_song_name)
