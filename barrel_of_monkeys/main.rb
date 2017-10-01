@@ -1,29 +1,52 @@
 class Main
   def initialize(library:)
-    @memory = library.dup
+    @memory   = library.dup
   end
 
   def playlist(first_song_name: nil)
-    return @memory if @memory.empty?
+    @playlist = []
 
-    @first_song = if first_song_name
-      extract_first_song(first_song_name)
+    return @playlist if @memory.empty?
+
+    if first_song_name
+      first_song = @memory.detect { |s| s == first_song_name }
     else
-      @memory[0]
+      first_song = @memory[0]
     end
 
+    @memory.delete(first_song)
+    @playlist << first_song
+
     order_by_last_song_letter
-    return [@first_song] + @memory if first_song_name
-    @memory
+    @playlist
   end
 
   private
 
-  def extract_first_song(first_song_name)
-    @memory.delete(first_song_name)
+  def order_by_last_song_letter
+    @found_next_song = true
+    while @found_next_song
+      song = next_song
+
+      # puts ''
+      # puts '-' * 50
+      # puts "@playlist = #{@playlist}".center(50)
+      # puts "next_song = #{song}"
+      # puts '-' * 50
+      # puts ''
+
+      if song
+        @playlist << song
+        @memory.delete(song)
+      else
+        @found_next_song = false
+      end
+    end
+
+    @playlist
   end
 
-  def order_by_last_song_letter
-    @memory.sort!
+  def next_song
+    @memory.detect{ |s| s[0] == @playlist.last[-1] }
   end
 end

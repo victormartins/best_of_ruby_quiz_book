@@ -25,7 +25,7 @@ RSpec.describe Main do
         expect(subject.playlist(first_song_name: 'a_song_b')).to eq(expected_array)
       end
 
-      context 'when setting the first song name' do
+      context 'if I set the first song name' do
         it 'returns a playlist starting at that song name' do
           expect(subject.playlist(first_song_name: 'c_song_d')).to start_with('c_song_d')
         end
@@ -34,6 +34,8 @@ RSpec.describe Main do
           expected_array = ['c_song_d', 'd_song_e', 'e_song_f']
           expect(subject.playlist(first_song_name: 'c_song_d')).to eq(expected_array)
         end
+
+        it 'raises an error if the first song was not found'
       end
     end
 
