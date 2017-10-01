@@ -20,4 +20,10 @@ class Playlist
   def each(&block)
     @playlist.each(&block)
   end
+
+  def duration
+    @playlist.inject(BigDecimal.new('0')) do |sum, song|
+      sum += BigDecimal.new(song.duration)
+    end
+  end
 end

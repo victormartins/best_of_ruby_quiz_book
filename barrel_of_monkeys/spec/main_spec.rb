@@ -12,11 +12,11 @@ RSpec.describe Main do
 
       let(:library) do
         [
-          Song.new('c_song_d'),
-          Song.new('e_song_f'),
-          Song.new('a_song_b'),
-          Song.new('d_song_e'),
-          Song.new('b_song_c')
+          Song.new(name: 'c_song_d'),
+          Song.new(name: 'e_song_f'),
+          Song.new(name: 'a_song_b'),
+          Song.new(name: 'd_song_e'),
+          Song.new(name: 'b_song_c')
         ]
       end
 
@@ -64,8 +64,8 @@ RSpec.describe Main do
       context 'when passing two ordered songs' do
         let(:library) do
           [
-            Song.new('az'),
-            Song.new('za')
+            Song.new(name: 'az'),
+            Song.new(name: 'za')
           ]
         end
 
@@ -77,8 +77,8 @@ RSpec.describe Main do
       context 'when passing two unordered songs' do
         let(:library) do
           [
-            Song.new('az'),
-            Song.new('za')
+            Song.new(name: 'az'),
+            Song.new(name: 'za')
           ]
         end
 

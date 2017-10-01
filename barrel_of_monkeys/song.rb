@@ -1,8 +1,11 @@
 class Song
   attr_accessor :artist, :id, :duration, :name
 
-  def initialize(name)
-    @name = name
+  def initialize(name:, duration: nil, id: nil, artist: nil)
+    @name     = name
+    @duration = duration
+    @id       = id
+    @artist   = artist
   end
 
   def <=>(other_song)

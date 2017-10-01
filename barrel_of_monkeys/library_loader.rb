@@ -36,7 +36,7 @@ class LibraryLoader
   end
 
   def create_song(xml_song, artist_name)
-    song          = Song.new(xml_song['name'])
+    song          = Song.new(name: xml_song['name'])
     song.id       = xml_song['id']
     song.duration = xml_song['duration']
     song.artist   = artist_name
