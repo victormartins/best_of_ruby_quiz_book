@@ -10,15 +10,11 @@ class LibraryLoader
 
   def call
     @result = []
-    @xml_data = File.open(@source_path) { |f| Nokogiri::XML(f) }
     artists.each do |artist|
       artist_name = artist['name']
+
       songs_from(artist).each do |xml_song|
-        song          = Song.new(xml_song['name'])
-        song.id       = xml_song['id']
-        song.duration = xml_song['duration']
-        song.artist   = artist_name
-        @result << song
+        @result << create_song(xml_song, artist_name)
       end
     end
 
@@ -28,10 +24,22 @@ class LibraryLoader
   private
 
   def artists
-    @xml_data.css('Artist')
+    xml_data.css('Artist')
   end
 
   def songs_from(artist)
     artist.css('Song')
+  end
+
+  def xml_data
+    @xml_data ||= File.open(@source_path) { |f| Nokogiri::XML(f) }
+  end
+
+  def create_song(xml_song, artist_name)
+    song          = Song.new(xml_song['name'])
+    song.id       = xml_song['id']
+    song.duration = xml_song['duration']
+    song.artist   = artist_name
+    song
   end
 end

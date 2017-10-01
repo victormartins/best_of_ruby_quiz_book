@@ -89,7 +89,9 @@ RSpec.describe Main do
     end
 
     context 'when I dont pass a library of songs' do
-      it 'I get songs from the xml file'
+      it 'I get songs from the xml file' do
+        expect(subject.playlist.first.name).to eq('Caught Up In You')
+      end
     end
 
     context 'when the first song does not relate no any other song' do

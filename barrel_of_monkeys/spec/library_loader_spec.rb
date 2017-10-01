@@ -10,8 +10,9 @@ RSpec.describe LibraryLoader do
   describe 'Reading the XML file by default' do
     subject { described_class.new.call}
 
-    it 'returns an array' do
+    it 'returns an array with all the songs in the file' do
       expect(subject).to be_kind_of(Array)
+      expect(subject.count).to eq(5115)
     end
 
     describe 'the first element of the collection' do
