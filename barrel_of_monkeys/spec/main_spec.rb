@@ -2,19 +2,14 @@ require_relative './../main'
 require_relative './../song'
 
 RSpec.describe Main do
-  let(:library) { [] }
-  subject { described_class.new(library: library) }
-
   describe '#playlist' do
-    it 'returns a collection' do
-      expect(subject.playlist).to eq([])
-    end
-
-    it 'does not change the injected library' do
-      expect(subject.playlist.object_id).to_not eq(library.object_id)
+    it 'returns an Array' do
+      expect(subject.playlist).to be_kind_of(Array)
     end
 
     context 'when I pass a library of songs' do
+      subject { described_class.new(library: library) }
+
       let(:library) do
         [
           Song.new('c_song_d'),
@@ -23,6 +18,10 @@ RSpec.describe Main do
           Song.new('d_song_e'),
           Song.new('b_song_c')
         ]
+      end
+
+      it 'does not change the injected library' do
+        expect(subject.playlist.object_id).to_not eq(library.object_id)
       end
 
       it 'contains the songs of that library' do
@@ -61,32 +60,36 @@ RSpec.describe Main do
           end
         end
       end
+
+      context 'when passing two ordered songs' do
+        let(:library) do
+          [
+            Song.new('az'),
+            Song.new('za')
+          ]
+        end
+
+        it 'returns only two songs' do
+          expect(subject.playlist.map(&:name)).to eq(['az','za'])
+        end
+      end
+
+      context 'when passing two unordered songs' do
+        let(:library) do
+          [
+            Song.new('az'),
+            Song.new('za')
+          ]
+        end
+
+        it 'returns only two songs' do
+          expect(subject.playlist(first_song_name: 'za')).to eq(['za', 'az'])
+        end
+      end
     end
 
-    context 'when passing two ordered songs' do
-      let(:library) do
-        [
-          Song.new('az'),
-          Song.new('za')
-        ]
-      end
-
-      it 'returns only two songs' do
-        expect(subject.playlist.map(&:name)).to eq(['az','za'])
-      end
-    end
-
-    context 'when passing two unordered songs' do
-      let(:library) do
-        [
-          Song.new('az'),
-          Song.new('za')
-        ]
-      end
-
-      it 'returns only two songs' do
-        expect(subject.playlist(first_song_name: 'za')).to eq(['za', 'az'])
-      end
+    context 'when I dont pass a library of songs' do
+      it 'I get songs from the xml file'
     end
 
     context 'when the first song does not relate no any other song' do

@@ -1,5 +1,7 @@
+require_relative 'library_loader'
+
 class Main
-  def initialize(library:)
+  def initialize(library: LibraryLoader.new.call)
     @memory   = library.dup
   end
 
