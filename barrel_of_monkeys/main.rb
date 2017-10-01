@@ -3,13 +3,12 @@ class Main
     @memory   = library.dup
   end
 
-  def playlist(first_song_name: nil)
+  def playlist(first_song_name: nil, last_song_name: nil)
     @playlist = []
-
     return @playlist if @memory.empty?
 
     insert_first_song(first_song_name)
-    order_by_last_song_letter
+    order_by_last_song_letter(last: last_song_name)
 
     @playlist
   end
@@ -17,20 +16,19 @@ class Main
   private
 
   def insert_first_song(first_song_name = nil)
-    if first_song_name
-      first_song = @memory.detect { |s| s == first_song_name }
-    else
-      first_song = @memory[0]
-    end
+    first_song = get_first_song(first_song_name)
     @playlist << first_song
     @memory.delete(first_song)
   end
 
-  private
+  def get_first_song(first_song_name)
+    return @memory.detect { |s| s == first_song_name }  if first_song_name
+    @memory[0]
+  end
 
-  def order_by_last_song_letter
-    @found_next_song = true
-    while @found_next_song
+  def order_by_last_song_letter(last:)
+    @get_next_song = true
+    while @get_next_song
       song = next_song
 
       # puts ''
@@ -43,8 +41,9 @@ class Main
       if song
         @playlist << song
         @memory.delete(song)
+        @get_next_song = false if song == last
       else
-        @found_next_song = false
+        @get_next_song = false
       end
     end
 

@@ -36,6 +36,23 @@ RSpec.describe Main do
         end
 
         it 'raises an error if the first song was not found'
+
+        context 'and a last song name' do
+          let(:library) { ['c_song_d', 'e_song_f', 'a_song_b', 'd_song_e' ,'b_song_c'] }
+
+          it 'connects the first and the last song name' do
+            expect(
+              subject.playlist(
+                first_song_name: 'b_song_c',
+                last_song_name: 'd_song_e'
+              )
+            ).to eq([
+                'b_song_c',
+                'c_song_d',
+                'd_song_e'
+              ])
+          end
+        end
       end
     end
 
