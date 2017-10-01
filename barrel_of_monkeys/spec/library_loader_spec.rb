@@ -13,5 +13,14 @@ RSpec.describe LibraryLoader do
     it 'returns an array' do
       expect(subject).to be_kind_of(Array)
     end
+
+    describe 'the first element of the collection' do
+      subject { described_class.new.call.first }
+
+      its(:artist) { is_expected.to eq('.38 Special') }
+      its(:name) { is_expected.to eq('Caught Up In You') }
+      its(:id) { is_expected.to eq('162') }
+      its(:duration) { is_expected.to eq('276610') }
+    end
   end
 end
