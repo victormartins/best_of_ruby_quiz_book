@@ -8,17 +8,22 @@ class Main
 
     return @playlist if @memory.empty?
 
+    insert_first_song(first_song_name)
+    order_by_last_song_letter
+
+    @playlist
+  end
+
+  private
+
+  def insert_first_song(first_song_name = nil)
     if first_song_name
       first_song = @memory.detect { |s| s == first_song_name }
     else
       first_song = @memory[0]
     end
-
-    @memory.delete(first_song)
     @playlist << first_song
-
-    order_by_last_song_letter
-    @playlist
+    @memory.delete(first_song)
   end
 
   private
