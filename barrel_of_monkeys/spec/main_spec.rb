@@ -20,13 +20,20 @@ RSpec.describe Main do
         expect(subject.playlist).to include('c_song_d')
       end
 
-      it 'allows us to define the name of the first song' do
-        expect(subject.playlist(first_song_name: 'a_song_b')).to start_with('a_song_b')
-      end
-
       it 'returns songs ordered by the last letter' do
         expected_array = ['a_song_b', 'b_song_c', 'c_song_d', 'd_song_e', 'e_song_f']
         expect(subject.playlist(first_song_name: 'a_song_b')).to eq(expected_array)
+      end
+
+      context 'when setting the first song name' do
+        it 'returns a playlist starting at that song name' do
+          expect(subject.playlist(first_song_name: 'c_song_d')).to start_with('c_song_d')
+        end
+
+        it 'links all other possible songs with that music' do
+          expected_array = ['c_song_d', 'd_song_e', 'e_song_f']
+          expect(subject.playlist(first_song_name: 'c_song_d')).to eq(expected_array)
+        end
       end
     end
 
