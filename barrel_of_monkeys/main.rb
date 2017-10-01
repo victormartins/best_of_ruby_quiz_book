@@ -13,7 +13,8 @@ class Main
     end
 
     order_by_last_song_letter
-    [@first_song] + @memory
+    return [@first_song] + @memory if first_song_name
+    @memory
   end
 
   private
@@ -23,20 +24,6 @@ class Main
   end
 
   def order_by_last_song_letter
-    result = []
-    first_iteration = true
-
-    while(@memory.any?) do
-      @first_song = result[-1] unless first_iteration
-      match_song = @memory.select { |song| song[0].downcase == @first_song[-1].downcase  }
-      result << @memory.slice!(@memory.find_index(match_song[0]))
-
-      if @memory.length == 1
-        result << @memory.pop
-      end
-      first_iteration = false
-    end
-
-    @memory = result.flatten
+    @memory.sort!
   end
 end
