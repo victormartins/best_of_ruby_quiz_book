@@ -1,4 +1,5 @@
 require_relative './../main'
+require_relative './../song'
 
 RSpec.describe Main do
   let(:library) { [] }
@@ -14,38 +15,44 @@ RSpec.describe Main do
     end
 
     context 'when I pass a library of songs' do
-      let(:library) { ['c_song_d','e_song_f' ,'a_song_b', 'd_song_e' ,'b_song_c'] }
+      let(:library) do
+        [
+          Song.new('c_song_d'),
+          Song.new('e_song_f'),
+          Song.new('a_song_b'),
+          Song.new('d_song_e'),
+          Song.new('b_song_c')
+        ]
+      end
 
       it 'contains the songs of that library' do
-        expect(subject.playlist).to include('c_song_d')
+        expect(subject.playlist.map(&:name)).to include('c_song_d')
       end
 
       it 'returns songs ordered by the last letter' do
         expected_array = ['a_song_b', 'b_song_c', 'c_song_d', 'd_song_e', 'e_song_f']
-        expect(subject.playlist(first_song_name: 'a_song_b')).to eq(expected_array)
+        expect(subject.playlist(first_song_name: 'a_song_b').map(&:name)).to eq(expected_array)
       end
 
       context 'if I set the first song name' do
         it 'returns a playlist starting at that song name' do
-          expect(subject.playlist(first_song_name: 'c_song_d')).to start_with('c_song_d')
+          expect(subject.playlist(first_song_name: 'c_song_d').map(&:name)).to start_with('c_song_d')
         end
 
         it 'links all other possible songs with that music' do
           expected_array = ['c_song_d', 'd_song_e', 'e_song_f']
-          expect(subject.playlist(first_song_name: 'c_song_d')).to eq(expected_array)
+          expect(subject.playlist(first_song_name: 'c_song_d').map(&:name)).to eq(expected_array)
         end
 
         it 'raises an error if the first song was not found'
 
         context 'and a last song name' do
-          let(:library) { ['c_song_d', 'e_song_f', 'a_song_b', 'd_song_e' ,'b_song_c'] }
-
           it 'connects the first and the last song name' do
             expect(
               subject.playlist(
                 first_song_name: 'b_song_c',
                 last_song_name: 'd_song_e'
-              )
+              ).map(&:name)
             ).to eq([
                 'b_song_c',
                 'c_song_d',
@@ -57,15 +64,25 @@ RSpec.describe Main do
     end
 
     context 'when passing two ordered songs' do
-      let(:library) { ['az','za'] }
+      let(:library) do
+        [
+          Song.new('az'),
+          Song.new('za')
+        ]
+      end
 
       it 'returns only two songs' do
-        expect(subject.playlist).to eq(['az','za'])
+        expect(subject.playlist.map(&:name)).to eq(['az','za'])
       end
     end
 
     context 'when passing two unordered songs' do
-      let(:library) { ['az','za'] }
+      let(:library) do
+        [
+          Song.new('az'),
+          Song.new('za')
+        ]
+      end
 
       it 'returns only two songs' do
         expect(subject.playlist(first_song_name: 'za')).to eq(['za', 'az'])

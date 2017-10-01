@@ -22,7 +22,7 @@ class Main
   end
 
   def get_first_song(first_song_name)
-    return @memory.detect { |s| s == first_song_name }  if first_song_name
+    return @memory.detect { |s| s.name == first_song_name } if first_song_name
     @memory[0]
   end
 
@@ -51,6 +51,6 @@ class Main
   end
 
   def next_song
-    @memory.detect{ |s| s[0] == @playlist.last[-1] }
+    @memory.detect{ |s| s.name[0] == @playlist.last.name[-1] }
   end
 end
