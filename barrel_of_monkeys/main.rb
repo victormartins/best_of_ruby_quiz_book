@@ -1,42 +1,60 @@
+require_relative 'library_loader'
+require_relative 'playlist'
+
 class Main
-  def initialize(library:)
-    @memory = library.dup
+  def initialize(library: LibraryLoader.new.call)
+    @library = library.dup
   end
 
-  def playlist(first_song_name: nil)
-    return @memory if @memory.empty?
+  def playlist(first_song_name: nil, last_song_name: nil)
+    @playlist = Playlist.new
+    @memory   = @library.dup
+    return @playlist if @memory.empty?
 
-    @first_song = if first_song_name
-      extract_first_song(first_song_name)
-    else
-      @memory[0]
-    end
+    insert_first_song(first_song_name)
+    order_by_last_song_letter(last: last_song_name)
 
-    order_by_last_song_letter
-    [@first_song] + @memory
+    @playlist
   end
 
   private
 
-  def extract_first_song(first_song_name)
-    @memory.delete(first_song_name)
+  def insert_first_song(first_song_name = nil)
+    first_song = get_first_song(first_song_name)
+    @playlist << first_song
+    @memory.delete(first_song)
   end
 
-  def order_by_last_song_letter
-    result = []
-    first_iteration = true
+  def get_first_song(first_song_name)
+    return @memory.detect { |s| s.name == first_song_name } if first_song_name
+    @memory[0]
+  end
 
-    while(@memory.any?) do
-      @first_song = result[-1] unless first_iteration
-      match_song = @memory.select { |song| song[0].downcase == @first_song[-1].downcase  }
-      result << @memory.slice!(@memory.find_index(match_song[0]))
+  def order_by_last_song_letter(last:)
+    @get_next_song = true
+    while @get_next_song
+      song = next_song
 
-      if @memory.length == 1
-        result << @memory.pop
+      # puts ''
+      # puts '-' * 50
+      # puts "@playlist = #{@playlist}".center(50)
+      # puts "next_song = #{song}"
+      # puts '-' * 50
+      # puts ''
+
+      if song
+        @playlist << song
+        @memory.delete(song)
+        @get_next_song = false if song == last
+      else
+        @get_next_song = false
       end
-      first_iteration = false
     end
 
-    @memory = result.flatten
+    @playlist
+  end
+
+  def next_song
+    @memory.detect{ |s| s.name[0].downcase == @playlist.last.name[-1].downcase }
   end
 end
