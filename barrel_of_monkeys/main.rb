@@ -2,15 +2,21 @@ class Playlist
   include Enumerable
 
   def initialize
-    @playlist = []
+    @memory = []
+  end
+
+  def order_alphabetically
+    @memory = @memory.sort do |song_a, song_b|
+      song_a.name <=> song_b.name
+    end
   end
 
   def <<(song)
-    @playlist << song
+    @memory << song
   end
 
   def each(&block)
-    @playlist.each(&block)
+    @memory.each(&block)
   end
 end
 
@@ -19,12 +25,15 @@ class Main
     @library = library
   end
 
-  def playlist
+  def playlist(first_song_name: nil)
     @playlist = Playlist.new
     # require 'pry'; binding.pry
+
     @library.each do |song|
       @playlist << song
     end
+
+    @playlist.order_alphabetically
 
     @playlist
   end
