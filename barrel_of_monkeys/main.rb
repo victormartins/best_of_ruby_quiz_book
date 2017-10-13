@@ -5,9 +5,9 @@ class Playlist
     @memory = []
   end
 
-  def order_alphabetically
+  def order_by_last_letter
     @memory = @memory.sort do |song_a, song_b|
-      song_a.name <=> song_b.name
+      song_a.name[-1] <=> song_b.name[0]
     end
   end
 
@@ -33,7 +33,7 @@ class Main
       @playlist << song
     end
 
-    @playlist.order_alphabetically
+    @playlist.order_by_last_letter
 
     @playlist
   end

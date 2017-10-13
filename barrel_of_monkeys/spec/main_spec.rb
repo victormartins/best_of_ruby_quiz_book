@@ -12,11 +12,11 @@ RSpec.describe Main do
 
       let(:library) do
         [
-          Song.new(name: 'c_song_d'),
+          Song.new(name: 'd_song_c'),
           Song.new(name: 'e_song_f'),
           Song.new(name: 'a_song_b'),
-          Song.new(name: 'd_song_e'),
-          Song.new(name: 'b_song_c')
+          Song.new(name: 'c_song_e'),
+          Song.new(name: 'b_song_d')
         ]
       end
 
@@ -25,22 +25,22 @@ RSpec.describe Main do
       end
 
       it 'contains the songs of that library' do
-        expect(subject.playlist.map(&:name)).to include('c_song_d')
+        expect(subject.playlist.map(&:name)).to include('d_song_c')
       end
 
       it 'returns songs ordered by the last letter' do
-        expected_array = ['a_song_b', 'b_song_c', 'c_song_d', 'd_song_e', 'e_song_f']
+        expected_array = ['a_song_b', 'b_song_d', 'd_song_c', 'c_song_e', 'e_song_f']
         expect(subject.playlist(first_song_name: 'a_song_b').map(&:name)).to eq(expected_array)
       end
 
       context 'if I set the first song name' do
         it 'returns a playlist starting at that song name' do
-          expect(subject.playlist(first_song_name: 'c_song_d').map(&:name)).to start_with('c_song_d')
+          expect(subject.playlist(first_song_name: 'd_song_c').map(&:name)).to start_with('d_song_c')
         end
 
         it 'links all other possible songs with that music' do
-          expected_array = ['c_song_d', 'd_song_e', 'e_song_f']
-          expect(subject.playlist(first_song_name: 'c_song_d').map(&:name)).to eq(expected_array)
+          expected_array = ['d_song_c', 'c_song_e', 'e_song_f']
+          expect(subject.playlist(first_song_name: 'd_song_c').map(&:name)).to eq(expected_array)
         end
 
         it 'raises an error if the first song was not found'
@@ -49,13 +49,13 @@ RSpec.describe Main do
           it 'connects the first and the last song name' do
             expect(
               subject.playlist(
-                first_song_name: 'b_song_c',
-                last_song_name: 'd_song_e'
+                first_song_name: 'b_song_d',
+                last_song_name: 'c_song_e'
               ).map(&:name)
             ).to eq([
-                'b_song_c',
-                'c_song_d',
-                'd_song_e'
+                'b_song_d',
+                'd_song_c',
+                'c_song_e'
               ])
           end
         end
