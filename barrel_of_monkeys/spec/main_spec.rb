@@ -3,7 +3,7 @@ require_relative './../song'
 
 RSpec.describe Main do
   describe '#playlist' do
-    it 'returns an Array' do
+    it 'returns a Playlist instance' do
       expect(subject.playlist).to be_kind_of(Playlist)
     end
 
@@ -90,6 +90,7 @@ RSpec.describe Main do
 
     context 'when I dont pass a library of songs' do
       it 'I get songs from the xml file' do
+        # TODO:Fix LoD problem.
         expect(subject.playlist.first.name).to eq('Caught Up In You')
       end
 
