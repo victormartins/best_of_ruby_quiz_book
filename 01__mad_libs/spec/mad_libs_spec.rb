@@ -12,7 +12,7 @@ RSpec.describe MadLib do
         expect(subject.questions).to eql(['Please enter a language:'])
       end
 
-      it 'replaces the awnser correctly' do
+      it 'replaces the answer correctly' do
         answers = ['Ruby']
         expect(subject.answers(answers)).to eql('Our favorite language is Ruby.')
       end
@@ -32,7 +32,7 @@ RSpec.describe MadLib do
         )
       end
 
-      it 'replaces the awnsers correctly' do
+      it 'replaces the answers correctly' do
         answers = ['Ruby', 'Refactoring Ruby Edition']
         expect(subject.answers(answers)).to eql(
           'Our favorite language is Ruby and our favorite book is Refactoring Ruby Edition.'
@@ -62,7 +62,7 @@ RSpec.describe MadLib do
         )
       end
 
-      it 'replaces the awnsers correctly' do
+      it 'replaces the answers correctly' do
         answers = ['Ruby', 'Refactoring Ruby Edition']
 
         expect(subject.answers(answers)).to eql(
@@ -87,20 +87,12 @@ RSpec.describe MadLib do
         )
       end
 
-      it 'replaces the awnsers correctly' do
+      it 'replaces the answers correctly' do
         answers = ['smelly', 'big toe', 'bathtub']
         expect(subject.answers(answers)).to eql(
           'I had a smelly sandwich for lunch today. ' \
           'It dripped all over my big toe and bathtub.'
         )
-      end
-
-      it 'does not mutate the input' do
-        answers = ['Ruby', 'Refactoring Ruby Edition']
-
-        subject.answers(answers)
-
-        expect(answers).to eql(['Ruby', 'Refactoring Ruby Edition'])
       end
     end
 
@@ -144,7 +136,7 @@ RSpec.describe MadLib do
         )
       end
 
-      xit 'replaces the awnser correctly' do
+      it 'replaces the answer correctly' do
         answers = ['Red Wine', "Shepperd's Pie"]
 
         expect(subject.answers(answers)).to eql(
