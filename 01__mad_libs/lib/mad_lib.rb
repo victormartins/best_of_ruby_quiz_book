@@ -2,7 +2,7 @@ require 'logger'
 
 class MadLib
   QUESTION_START = 'Please enter'.freeze
-  PLACEHOLDER_MATCHER = /\(\((.*)\)\)/
+  PLACEHOLDER_MATCHER = /(?:\(\(([^)]+))\)\)/
 
   def initialize(template:)
     @template = template
@@ -12,10 +12,10 @@ class MadLib
   end
 
   def questions
-    place_holders = @template.match(PLACEHOLDER_MATCHER).captures
+    place_holders = @template.scan(PLACEHOLDER_MATCHER)
 
     result = place_holders.map do |question|
-      "#{QUESTION_START} #{question}:"
+      "#{QUESTION_START} #{question.first}:"
     end
 
     logger.debug { "#{self.class} - Questions: #{result}" }
@@ -23,7 +23,16 @@ class MadLib
   end
 
   def answers(answers)
-    @template.gsub(PLACEHOLDER_MATCHER, answers.first)
+    placeholders = @template.split(PLACEHOLDER_MATCHER)
+    answers = answers.dup
+
+    placeholders.map.with_index do |original_text, index|
+      if index.even?
+        original_text
+      else
+        answers.shift
+      end
+    end.join
   end
 
   attr_reader :logger
