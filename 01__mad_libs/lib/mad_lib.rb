@@ -12,11 +12,25 @@ class MadLib
   end
 
   def questions
-    place_holders = @template.scan(PLACEHOLDER_MATCHER)
+    place_holders = @template.scan(PLACEHOLDER_MATCHER).map(&:first)
 
-    result = place_holders.map do |question|
-      "#{QUESTION_START} #{question.first}:"
-    end
+    result = place_holders.map do |place_holder|
+      if place_holder.include?(':')
+        logger.debug { "#{self.class} - Key/Value Placeholder: #{place_holder}" }
+
+        key_value = place_holder.split(':')
+        key = key_value.first.strip
+
+        question = key_value.last.strip
+      elsif place_holder.split.length == 1
+        logger.debug { "#{self.class} - Ignoring Key: #{place_holder}" }
+        question = nil
+      else
+        question = place_holder
+      end
+
+      full_question(question) if question
+    end.compact
 
     logger.debug { "#{self.class} - Questions: #{result}" }
     result
@@ -36,4 +50,10 @@ class MadLib
   end
 
   attr_reader :logger
+
+  private
+
+  def full_question(question)
+    "#{QUESTION_START} #{question}:"
+  end
 end

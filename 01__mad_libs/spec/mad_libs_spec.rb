@@ -98,9 +98,35 @@ RSpec.describe MadLib do
 
       it 'replaces the answers correctly' do
         answers = ['Ruby', 'Refactoring Ruby Edition']
+
         expect(subject.answers(answers)).to eql(
           "Our favorite language is Ruby\n" \
-          "and our favorite book is Refactoring Ruby Edition."
+            'and our favorite book is Refactoring Ruby Edition.'
+        )
+      end
+    end
+
+    context 'When the template reuses placeholders' do
+      let(:template) do
+        'Our favorite drink is ((drink:a drink)). ' \
+        'We think ((drink)) goes well with ((a dish)).'
+      end
+
+      it 'returns a two questions' do
+        expect(subject.questions).to eql(
+          [
+            'Please enter a drink:',
+            'Please enter a dish:'
+          ]
+        )
+      end
+
+      xit 'replaces the awnser correctly' do
+        answers = ['Red Wine', "Shepperd's Pie"]
+
+        expect(subject.answers(answers)).to eql(
+          'Our favorite drink is Red Wine. ' \
+          "We think Red Wine goes well with Shepperd's Pie."
         )
       end
     end
