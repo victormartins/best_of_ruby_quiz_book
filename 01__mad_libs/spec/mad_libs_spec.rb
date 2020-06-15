@@ -48,6 +48,29 @@ RSpec.describe MadLib do
       end
     end
 
+    context 'When the template has a two questions an one is in the start' do
+      let(:template) do
+        '((a language)) is our favorite language and our favorite book is ((a book)).'
+      end
+
+      it 'returns a two questions' do
+        expect(subject.questions).to eql(
+          [
+            'Please enter a language:',
+            'Please enter a book:'
+          ]
+        )
+      end
+
+      it 'replaces the awnsers correctly' do
+        answers = ['Ruby', 'Refactoring Ruby Edition']
+
+        expect(subject.answers(answers)).to eql(
+          'Ruby is our favorite language and our favorite book is Refactoring Ruby Edition.'
+        )
+      end
+    end
+
     context 'When the template has a three questions' do
       let(:template) do
         'I had a ((an adjective)) sandwich for lunch today. ' \
