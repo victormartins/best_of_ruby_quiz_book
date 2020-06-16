@@ -1,4 +1,4 @@
-require 'mad_lib'
+require '00_mad_lib'
 
 RSpec.describe MadLib do
   subject { described_class.new(template: template) }
