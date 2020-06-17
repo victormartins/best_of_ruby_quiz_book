@@ -56,8 +56,14 @@ class LCDNumbers
       result.push([space, dash * scale, space])
       scale.times { result.push([pipe, space * scale, pipe]) }
       result.push([space, dash * scale, space])
+    when '1'
+      result = [space, space * scale, space]
+      scale.times { result.push([space, space * scale, pipe]) }
+      result.push([space, space * scale, space])
+      scale.times { result.push([space, space * scale, pipe]) }
+      result.push([space, space * scale, space])
     else
-      'Digit Not Found'
+      raise NotImplementedError, 'Digit Not Found'
     end
 
     digit_columns = 3

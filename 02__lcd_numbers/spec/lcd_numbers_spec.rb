@@ -13,43 +13,9 @@ RSpec.describe LCDNumbers do
           "|  |\n" \
           " -- \n" \
         )
-
-
-        #       a = [
-        #         '.xx.',
-        #         '.--.',
-        #         '.xx.'
-        #       ]
-
-        #       b = [
-        #         '.yy.',
-        #         '.00.',
-        #         '.yy.'
-        #       ]
-
-        #       c = [
-        #         '.zz.',
-        #         '.11.',
-        #         '.zz.'
-        #       ]
-
-        #       d = [
-        #         '.ii.',
-        #         '.HH.',
-        #         '.ii.'
-        #       ]
-
-
-        #       puts
-        #       puts
-        #       puts '_' * 50
-
-        #       puts a.zip(b).zip(c).map { |r| r.join(' ') }.join("\n")
-        #       puts
-        #       puts a.zip(b, c, d).map { |r| r.join(' ') }.join("\n")
       end
 
-      xit 'displays 1' do
+      it 'displays 1' do
         expect(subject.call(1)).to eql(
           "    \n" \
           "   |\n" \
@@ -63,6 +29,18 @@ RSpec.describe LCDNumbers do
     end
 
     describe 'Sequence of Digits' do
+      it 'A sequence of 111' do
+        expect(subject.call(111)).to eql(
+          "              \n" \
+          "   |    |    |\n" \
+          "   |    |    |\n" \
+          "              \n" \
+          "   |    |    |\n" \
+          "   |    |    |\n" \
+          "              \n" \
+        )
+      end
+
       it 'A sequence of zeros' do
         expect(subject.call('000')).to eql(
           " --   --   -- \n" \
