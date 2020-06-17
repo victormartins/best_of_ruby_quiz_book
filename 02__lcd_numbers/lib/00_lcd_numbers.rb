@@ -1,9 +1,12 @@
 require 'logger'
 
 class LCDNumbers
+  DEFAULT_SCALE = 2
   LOG_LEVEL = :debug
 
-  def initialize
+  def initialize(options = {})
+    @scale = options.fetch(:scale) { DEFAULT_SCALE }
+
     log_formatter = proc do |severity, _datetime, _progname, msg|
       "#{severity} - #{self.class} - #{msg}"
     end
@@ -19,15 +22,23 @@ class LCDNumbers
 
   private
 
-  attr_reader :logger
+  attr_reader :logger, :scale
 
   def transform(number)
-    " __ \n" \
-      "|  |\n" \
-      "|  |\n" \
-      " -- \n" \
-      "|  |\n" \
-      "|  |\n" \
-      " -- \n" \
+    dash = '-'
+    pipe = '|'
+    space = ' '
+
+    a = [space, dash * scale, space]
+    scale.times { a.push([pipe, space * scale, pipe]) }
+    a.push([space, dash * scale, space])
+    scale.times { a.push([pipe, space * scale, pipe]) }
+    a.push([space, dash * scale, space])
+
+    a.flatten
+     .each_slice(3)
+     .reduce([]) { |result, slice| result << slice.join }
+     .join("\n")
+     .concat("\n")
   end
 end
