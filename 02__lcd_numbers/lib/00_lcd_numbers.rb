@@ -13,32 +13,56 @@ class LCDNumbers
     @logger = Logger.new(STDOUT, level: LOG_LEVEL, formatter: log_formatter)
   end
 
-  def call(number)
-   logger.debug { "Input: #{number}\n" }
-   result = transform(number)
-   puts result
-   result
+  def call(digits)
+    digits = digits.to_s
+    logger.debug { "Input: #{digits}\n" }
+
+    array_of_digits = digits.chars.map do |digit|
+      transform(digit)
+    end
+
+
+    if array_of_digits.length > 1
+      first_digit = array_of_digits.shift
+      result = first_digit
+        .zip(*array_of_digits)
+        .map { |s| s.join(' ') }
+    else
+      result = array_of_digits
+    end
+
+    result = result
+      .join("\n")
+      .concat("\n")
+
+
+    logger.debug { "Output:\n#{result}\n" }
+    result
   end
 
   private
 
   attr_reader :logger, :scale
 
-  def transform(number)
+  def transform(digit)
     dash = '-'
     pipe = '|'
     space = ' '
 
-    a = [space, dash * scale, space]
-    scale.times { a.push([pipe, space * scale, pipe]) }
-    a.push([space, dash * scale, space])
-    scale.times { a.push([pipe, space * scale, pipe]) }
-    a.push([space, dash * scale, space])
+    case digit
+    when '0'
+      result = [space, dash * scale, space]
+      scale.times { result.push([pipe, space * scale, pipe]) }
+      result.push([space, dash * scale, space])
+      scale.times { result.push([pipe, space * scale, pipe]) }
+      result.push([space, dash * scale, space])
+    else
+      'Digit Not Found'
+    end
 
-    a.flatten
-     .each_slice(3)
-     .reduce([]) { |result, slice| result << slice.join }
-     .join("\n")
-     .concat("\n")
+    digit_columns = 3
+    result.flatten
+          .each_slice(digit_columns)
+          .reduce([]) { |digit_array, slice| digit_array << slice.join }
   end
 end
