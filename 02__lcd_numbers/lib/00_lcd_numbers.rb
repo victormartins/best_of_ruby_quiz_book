@@ -2,10 +2,16 @@ require 'logger'
 
 class LCDNumbers
   DEFAULT_SCALE = 2
-  LOG_LEVEL = :debug
+  DASH          = '-'.freeze
+  PIPE          = '|'.freeze
+  SPACE         = ' '.freeze
+  LOG_LEVEL     = :debug
 
   def initialize(options = {})
     @scale = options.fetch(:scale) { DEFAULT_SCALE }
+    @dash = options.fetch(:dash) { DASH }
+    @pipe = options.fetch(:pipe) { PIPE }
+    @space = options.fetch(:space) { SPACE }
 
     log_formatter = proc do |severity, _datetime, _progname, msg|
       "#{severity} - #{self.class} - #{msg}"
@@ -42,13 +48,9 @@ class LCDNumbers
 
   private
 
-  attr_reader :logger, :scale
+  attr_reader :logger, :scale, :dash, :space, :pipe
 
   def transform(digit)
-    dash = '-'
-    pipe = '|'
-    space = ' '
-
     case digit
     when '0'
       top            = [space, dash * scale, space]
