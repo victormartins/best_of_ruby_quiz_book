@@ -51,30 +51,50 @@ class LCDNumbers
 
     case digit
     when '0'
-      result = [space, dash * scale, space]
-      scale.times { result.push([pipe, space * scale, pipe]) }
-      result.push([space, dash * scale, space])
-      scale.times { result.push([pipe, space * scale, pipe]) }
-      result.push([space, dash * scale, space])
+      top            = [space, dash * scale, space]
+      first_vertical = [pipe, space * scale, pipe]
+      middle         = [space, dash * scale, space]
+      second_middle  = [pipe, space * scale, pipe]
+      bottom         = [space, dash * scale, space]
     when '1'
-      result = [space, space * scale, space]
-      scale.times { result.push([space, space * scale, pipe]) }
-      result.push([space, space * scale, space])
-      scale.times { result.push([space, space * scale, pipe]) }
-      result.push([space, space * scale, space])
+      top            = [space, space * scale, space]
+      first_vertical = [space, space * scale, pipe]
+      middle         = [space, space * scale, space]
+      second_middle  = [space, space * scale, pipe]
+      bottom         = [space, space * scale, space]
     when '2'
-      result = [space, dash * scale, space]
-      scale.times { result.push([space, space * scale, pipe]) }
-      result.push([space, dash * scale, space])
-      scale.times { result.push([pipe, space * scale, space]) }
-      result.push([space, dash * scale, space])
+      top            = [space, dash * scale, space]
+      first_vertical = [space, space * scale, pipe]
+      middle         = [space, dash * scale, space]
+      second_middle  = [pipe, space * scale, space]
+      bottom         = [space, dash * scale, space]
     else
       raise NotImplementedError, 'Digit Not Found'
     end
 
-    digit_columns = 3
+
+    result = build_letter(
+      top: top,
+      first_vertical: first_vertical,
+      middle: middle,
+      second_middle: second_middle,
+      bottom: bottom
+    )
+
+    digit_columns = 3 #result.first.length
+
     result.flatten
           .each_slice(digit_columns)
           .reduce([]) { |digit_array, slice| digit_array << slice.join }
+  end
+
+  def build_letter(top:, first_vertical:, middle:, second_middle:, bottom:)
+    [].tap do |lcd|
+      lcd.push(top)
+      scale.times { lcd.push(first_vertical) }
+      lcd.push(middle)
+      scale.times { lcd.push(second_middle) }
+      lcd.push(bottom)
+    end
   end
 end

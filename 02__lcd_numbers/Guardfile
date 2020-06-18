@@ -1,8 +1,19 @@
-guard :rspec, cmd: 'clear && bundle exec rspec spec/ --order defined --fail-fast', all_after_pass: false, failed_mode: :focus do
-  require "guard/rspec/dsl"
-  dsl = Guard::RSpec::Dsl.new(self)
+require 'guard/rspec/dsl'
 
-  # Feel free to open issues for suggestions and improvements
+# More info at https://github.com/guard/guard#readme
+directories(
+  %w(lib spec)
+).select{ |d| Dir.exist?(d) ? d : UI.warning("Directory #{d} does not exist") }
+
+options = {
+  cmd: "clear && bundle exec rspec spec/ --no-profile --order defined --fail-fast",
+  all_after_pass: false,
+  all_on_start: false,
+  failed_mode: :focus
+}
+
+guard :rspec, options do
+  dsl = Guard::RSpec::Dsl.new(self)
 
   # RSpec files
   rspec = dsl.rspec
@@ -13,4 +24,5 @@ guard :rspec, cmd: 'clear && bundle exec rspec spec/ --order defined --fail-fast
   # Ruby files
   ruby = dsl.ruby
   dsl.watch_spec_files_for(ruby.lib_files)
+  watch(%r{^lib/(.+)\.rb}) { rspec.spec_dir }
 end
