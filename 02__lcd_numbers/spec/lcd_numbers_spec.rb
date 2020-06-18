@@ -38,9 +38,105 @@ RSpec.describe LCDNumbers do
           " -- \n" \
         )
       end
+
+      it 'displays 3' do
+        expect(subject.call(3)).to eql(
+          " -- \n" \
+          "   |\n" \
+          "   |\n" \
+          " -- \n" \
+          "   |\n" \
+          "   |\n" \
+          " -- \n" \
+        )
+      end
+
+      it 'displays 4' do
+        expect(subject.call(4)).to eql(
+          "    \n" \
+          "|  |\n" \
+          "|  |\n" \
+          " -- \n" \
+          "   |\n" \
+          "   |\n" \
+          "    \n" \
+        )
+      end
+
+      it 'displays 5' do
+        expect(subject.call(5)).to eql(
+          " -- \n" \
+          "|   \n" \
+          "|   \n" \
+          " -- \n" \
+          "   |\n" \
+          "   |\n" \
+          " -- \n" \
+        )
+      end
+
+      it 'displays 6' do
+        expect(subject.call(6)).to eql(
+          " -- \n" \
+          "|   \n" \
+          "|   \n" \
+          " -- \n" \
+          "|  |\n" \
+          "|  |\n" \
+          " -- \n" \
+        )
+      end
+
+      it 'displays 7' do
+        expect(subject.call(7)).to eql(
+          " -- \n" \
+          "   |\n" \
+          "   |\n" \
+          " -- \n" \
+          "   |\n" \
+          "   |\n" \
+          "    \n" \
+        )
+      end
+
+      it 'displays 8' do
+        expect(subject.call(8)).to eql(
+          " -- \n" \
+          "|  |\n" \
+          "|  |\n" \
+          " -- \n" \
+          "|  |\n" \
+          "|  |\n" \
+          " -- \n" \
+        )
+      end
+
+      it 'displays 9' do
+        expect(subject.call(9)).to eql(
+          " -- \n" \
+          "|  |\n" \
+          "|  |\n" \
+          " -- \n" \
+          "   |\n" \
+          "   |\n" \
+          " -- \n" \
+        )
+      end
     end
 
     describe 'Sequence of Digits' do
+      it 'A sequence of zeros' do
+        expect(subject.call('000')).to eql(
+          " --   --   -- \n" \
+          "|  | |  | |  |\n" \
+          "|  | |  | |  |\n" \
+          " --   --   -- \n" \
+          "|  | |  | |  |\n" \
+          "|  | |  | |  |\n" \
+          " --   --   -- \n" \
+        )
+      end
+
       it 'A sequence of 111' do
         expect(subject.call(111)).to eql(
           "              \n" \
@@ -53,15 +149,15 @@ RSpec.describe LCDNumbers do
         )
       end
 
-      it 'A sequence of zeros' do
-        expect(subject.call('000')).to eql(
-          " --   --   -- \n" \
-          "|  | |  | |  |\n" \
-          "|  | |  | |  |\n" \
-          " --   --   -- \n" \
-          "|  | |  | |  |\n" \
-          "|  | |  | |  |\n" \
-          " --   --   -- \n" \
+      it 'A sequence of 1234567890' do
+        expect(subject.call(1234567890)).to eql(
+          "      --   --        --   --   --   --   --   -- \n" \
+          "   |    |    | |  | |    |       | |  | |  | |  |\n" \
+          "   |    |    | |  | |    |       | |  | |  | |  |\n" \
+          "      --   --   --   --   --   --   --   --   -- \n" \
+          "   | |       |    |    | |  |    | |  |    | |  |\n" \
+          "   | |       |    |    | |  |    | |  |    | |  |\n" \
+          "      --   --        --   --        --   --   -- \n" \
         )
       end
     end

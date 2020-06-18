@@ -68,23 +68,64 @@ class LCDNumbers
       middle         = [space, dash * scale, space]
       second_middle  = [pipe, space * scale, space]
       bottom         = [space, dash * scale, space]
+    when '3'
+      top            = [space, dash * scale, space]
+      first_vertical = [space, space * scale, pipe]
+      middle         = [space, dash * scale, space]
+      second_middle  = [space, space * scale, pipe]
+      bottom         = [space, dash * scale, space]
+    when '4'
+      top            = [space, space * scale, space]
+      first_vertical = [pipe, space * scale, pipe]
+      middle         = [space, dash * scale, space]
+      second_middle  = [space, space * scale, pipe]
+      bottom         = [space, space * scale, space]
+    when '5'
+      top            = [space, dash * scale, space]
+      first_vertical = [pipe, space * scale, space]
+      middle         = [space, dash * scale, space]
+      second_middle  = [space, space * scale, pipe]
+      bottom         = [space, dash * scale, space]
+    when '6'
+      top            = [space, dash * scale, space]
+      first_vertical = [pipe, space * scale, space]
+      middle         = [space, dash * scale, space]
+      second_middle  = [pipe, space * scale, pipe]
+      bottom         = [space, dash * scale, space]
+    when '7'
+      top            = [space, dash * scale, space]
+      first_vertical = [space, space * scale, pipe]
+      middle         = [space, dash * scale, space]
+      second_middle  = [space, space * scale, pipe]
+      bottom         = [space, space * scale, space]
+    when '8'
+      top            = [space, dash * scale, space]
+      first_vertical = [pipe, space * scale, pipe]
+      middle         = [space, dash * scale, space]
+      second_middle  = [pipe, space * scale, pipe]
+      bottom         = [space, dash * scale, space]
+    when '9'
+      top            = [space, dash * scale, space]
+      first_vertical = [pipe, space * scale, pipe]
+      middle         = [space, dash * scale, space]
+      second_middle  = [space, space * scale, pipe]
+      bottom         = [space, dash * scale, space]
     else
-      raise NotImplementedError, 'Digit Not Found'
+      raise NotImplementedError, "Digit Not Found: #{digit}"
     end
 
 
     result = build_letter(
-      top: top,
+      top:            top,
       first_vertical: first_vertical,
-      middle: middle,
-      second_middle: second_middle,
-      bottom: bottom
+      middle:         middle,
+      second_middle:  second_middle,
+      bottom:         bottom
     )
 
-    digit_columns = 3 #result.first.length
-
+    number_of_lcd_columns = result.first.length
     result.flatten
-          .each_slice(digit_columns)
+          .each_slice(number_of_lcd_columns)
           .reduce([]) { |digit_array, slice| digit_array << slice.join }
   end
 
