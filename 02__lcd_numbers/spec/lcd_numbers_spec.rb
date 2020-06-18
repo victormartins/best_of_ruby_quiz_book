@@ -179,6 +179,24 @@ RSpec.describe LCDNumbers do
         )
       end
     end
+
+    context 'When the scale is 3' do
+      let(:scale_factor) { 3 }
+
+      it 'displays 0 on the scale of 3' do
+        expect(subject.call(0)).to eql(
+          " --- \n" \
+          "|   |\n" \
+          "|   |\n" \
+          "|   |\n" \
+          " --- \n" \
+          "|   |\n" \
+          "|   |\n" \
+          "|   |\n" \
+          " --- \n"
+        )
+      end
+    end
   end
 
   describe 'It can show different styles' do
