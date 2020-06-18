@@ -62,6 +62,12 @@ class LCDNumbers
       result.push([space, space * scale, space])
       scale.times { result.push([space, space * scale, pipe]) }
       result.push([space, space * scale, space])
+    when '2'
+      result = [space, dash * scale, space]
+      scale.times { result.push([space, space * scale, pipe]) }
+      result.push([space, dash * scale, space])
+      scale.times { result.push([pipe, space * scale, space]) }
+      result.push([space, dash * scale, space])
     else
       raise NotImplementedError, 'Digit Not Found'
     end

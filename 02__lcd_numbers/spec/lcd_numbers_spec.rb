@@ -26,6 +26,18 @@ RSpec.describe LCDNumbers do
           "    \n" \
         )
       end
+
+      it 'displays 2' do
+        expect(subject.call(2)).to eql(
+          " -- \n" \
+          "   |\n" \
+          "   |\n" \
+          " -- \n" \
+          "|   \n" \
+          "|   \n" \
+          " -- \n" \
+        )
+      end
     end
 
     describe 'Sequence of Digits' do
