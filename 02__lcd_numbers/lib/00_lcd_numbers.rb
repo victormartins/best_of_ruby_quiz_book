@@ -53,11 +53,11 @@ class LCDNumbers
   def transform(digit)
     case digit
     when '0'
-      top            = [space, dash * scale, space]
+      top            = [space, dash, space]
       first_vertical = [pipe, space * scale, pipe]
-      middle         = [space, dash * scale, space]
+      middle         = [space, dash, space]
       second_middle  = [pipe, space * scale, pipe]
-      bottom         = [space, dash * scale, space]
+      bottom         = [space, dash, space]
     when '1'
       top            = [space, space * scale, space]
       first_vertical = [space, space * scale, pipe]
@@ -65,53 +65,53 @@ class LCDNumbers
       second_middle  = [space, space * scale, pipe]
       bottom         = [space, space * scale, space]
     when '2'
-      top            = [space, dash * scale, space]
+      top            = [space, dash, space]
       first_vertical = [space, space * scale, pipe]
-      middle         = [space, dash * scale, space]
+      middle         = [space, dash, space]
       second_middle  = [pipe, space * scale, space]
-      bottom         = [space, dash * scale, space]
+      bottom         = [space, dash, space]
     when '3'
-      top            = [space, dash * scale, space]
+      top            = [space, dash, space]
       first_vertical = [space, space * scale, pipe]
-      middle         = [space, dash * scale, space]
+      middle         = [space, dash, space]
       second_middle  = [space, space * scale, pipe]
-      bottom         = [space, dash * scale, space]
+      bottom         = [space, dash, space]
     when '4'
       top            = [space, space * scale, space]
       first_vertical = [pipe, space * scale, pipe]
-      middle         = [space, dash * scale, space]
+      middle         = [space, dash, space]
       second_middle  = [space, space * scale, pipe]
       bottom         = [space, space * scale, space]
     when '5'
-      top            = [space, dash * scale, space]
+      top            = [space, dash, space]
       first_vertical = [pipe, space * scale, space]
-      middle         = [space, dash * scale, space]
+      middle         = [space, dash, space]
       second_middle  = [space, space * scale, pipe]
-      bottom         = [space, dash * scale, space]
+      bottom         = [space, dash, space]
     when '6'
-      top            = [space, dash * scale, space]
+      top            = [space, dash, space]
       first_vertical = [pipe, space * scale, space]
-      middle         = [space, dash * scale, space]
+      middle         = [space, dash, space]
       second_middle  = [pipe, space * scale, pipe]
-      bottom         = [space, dash * scale, space]
+      bottom         = [space, dash, space]
     when '7'
-      top            = [space, dash * scale, space]
+      top            = [space, dash, space]
       first_vertical = [space, space * scale, pipe]
-      middle         = [space, dash * scale, space]
+      middle         = [space, dash, space]
       second_middle  = [space, space * scale, pipe]
       bottom         = [space, space * scale, space]
     when '8'
-      top            = [space, dash * scale, space]
+      top            = [space, dash, space]
       first_vertical = [pipe, space * scale, pipe]
-      middle         = [space, dash * scale, space]
+      middle         = [space, dash, space]
       second_middle  = [pipe, space * scale, pipe]
-      bottom         = [space, dash * scale, space]
+      bottom         = [space, dash, space]
     when '9'
-      top            = [space, dash * scale, space]
+      top            = [space, dash, space]
       first_vertical = [pipe, space * scale, pipe]
-      middle         = [space, dash * scale, space]
+      middle         = [space, dash, space]
       second_middle  = [space, space * scale, pipe]
-      bottom         = [space, dash * scale, space]
+      bottom         = [space, dash, space]
     else
       raise NotImplementedError, "Digit Not Found: #{digit}"
     end
@@ -138,6 +138,10 @@ class LCDNumbers
       lcd.push(middle)
       scale.times { lcd.push(second_middle) }
       lcd.push(bottom)
+    end
+      .map do |lcd_row|
+      lcd_row[1] = lcd_row[1].sub(dash, dash * scale)
+      lcd_row
     end
   end
 end
