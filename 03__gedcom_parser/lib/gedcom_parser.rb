@@ -1,7 +1,10 @@
+require 'logger'
 require 'xml_creator'
 
 class GedcomParser
   class Error < StandardError; end
+
+  require_relative 'parser'
 
   def call(input_file:)
     assert_file_exists!(input_file)
@@ -10,11 +13,18 @@ class GedcomParser
 
     xml = XMLCreator.new(root: 'gedcom')
 
+    line_parser = GedcomParser::Parser::Line.new
+
     input.each do |line|
+      parse_line = line_parser.call(line)
 
     end
 
     xml.call
+  end
+
+  def self.logger
+    @logger ||= Logger.new(STDOUT, Logger::INFO)
   end
 
   private
